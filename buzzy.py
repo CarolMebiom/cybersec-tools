@@ -36,8 +36,7 @@ def search_paths(url, wordlist, ignore_status = None, ignore_chars = None, ignor
         wordlist = file.read().splitlines()
     for word in wordlist:
         url_clean = url.replace("BUZZ", word)
-        url_clean = url_clean + "%00"
-        status, chars, words = _send_request(url)
+        status, chars, words = _send_request(url_clean)
         if status == ignore_status or str(chars) == ignore_chars or str(words) == ignore_words:
             continue
         else:
