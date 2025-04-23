@@ -24,8 +24,10 @@ def url_validator(url):
 
 def _send_request(clean_url):
     response = requests.get(clean_url, verify=False)
+    logger.debug(f"Response: ${response}")
     status = str(response.status_code)
     content = response.text
+    logger.debug(f"Response: ${content}")
     number_of_characters = len(content)
     number_of_words = len(content.split())
     return status, number_of_characters, number_of_words
@@ -80,6 +82,7 @@ jgs       ' .  . ' ' .  . '     (__/
 
     if args.verbose:
         logger.setLevel(logging.DEBUG)
+        console_handler.setLevel(logging.DEBUG)
 
     
     if url_validator(args.url):
