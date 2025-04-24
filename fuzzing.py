@@ -34,7 +34,7 @@ def post_creds(url, format_call, user, password, cookies=False):
     number_of_words = len(content.split())
     if "Invalid" in content or "error" in content.lower():
         print("Login Failed Marker Detected")
-    if "Welcome" in content or "dashboard" in content.lower():
+    else:
         print(">> POSSIBLE SUCCESS <<", user, password)
     logger.debug(f"HTTP response: {content}")
 
