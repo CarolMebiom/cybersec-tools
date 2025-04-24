@@ -70,13 +70,13 @@ def user_agent_fuzz(url, string):
 
     return status
 
-def run_post_creds(url, format_call, password_list, user=None, user_list=None):
+def run_post_creds(url, format_call, password_list, user=None, user_list=None, cookies):
     print("URL -- USER -- PASSWORD -- STATUS")
     if type(user) == str:
         with open(password_list,'r') as file:
             password_list = file.read().splitlines()
         for word in password_list:
-            status = post_creds(url, format_call, user, word)
+            status = post_creds(url, format_call, user, word, cookies)
             print(url, user, word, status)
         return True
     if type(user_list) == str:
@@ -86,7 +86,7 @@ def run_post_creds(url, format_call, password_list, user=None, user_list=None):
             with open(password_list,'r') as file:
                 password_list = file.read().splitlines()
             for word in password_list:
-                status = post_creds(url, format_call, username, word)
+                status = post_creds(url, format_call, username, word, cookies)
                 print(url, username, word, status)
         return True
 
