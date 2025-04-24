@@ -13,10 +13,11 @@ import logging
 import argparse
 
 def post_creds(url, format_call, user, password):
-    payload = { "username" : user, "password" : password}
     if format_call == "json":
+        payload = { "username" : user, "password" : password}
         request = requests.post(url, json=payload)
     else:
+        payload = f"username={user}&password={password}"
         request = requests.post(url, data=payload)
     
     status = str(request.status_code)
@@ -24,8 +25,10 @@ def post_creds(url, format_call, user, password):
     final_url = request.url
     number_of_characters = len(content)
     number_of_words = len(content.split())
-    if "loginSubmit" not in final_url:
-        print(f">>> POSSIBLE SUCCESS <<< {user}:{password} --> Redirected to: {final_url}")
+    if "Invalid" in content or "error" in content.lower():
+        print("Login Failed Marker Detected")
+    if "Welcome" in content or "dashboard" in content.lower():
+        print(">> POSSIBLE SUCCESS <<", user, password)
     logger.debug(f"HTTP response: {content}")
 
     return status
