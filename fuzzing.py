@@ -12,14 +12,16 @@ import base64
 import logging
 import argparse
 
-def post_creds(url, format_call, user, password, cookies=None):
+def post_creds(url, format_call, user, password, cookies=False):
     payload = { "username":user, 
                 "password":password
               }
+    if cookies = True:
+        cookie = requests.get(url).cookies
     if format_call == "json":
-        request = requests.post(url, json=payload)
+        request = requests.post(url, json=payload, cookies = cookie)
     else:
-        request = requests.post(url, data=payload)
+        request = requests.post(url, data=payload, cookies = cookie)
     
     status = str(request.status_code)
     content = request.text
@@ -134,7 +136,7 @@ if __name__ == "__main__":
     parser.add_argument('-U', '--user', help = "The user to test against")
     parser.add_argument('-ul', '--user-list-path', help = "A user list to test with passwords, this will take longer")
     parser.add_argument('-ual', '--user-agent-list-path', help = "User agent list")
-    parser.add_argument('-c', '--cookies', help = "Provide a cookie")
+    parser.add_argument('-c','--cookies', action = "store_true", help = "Provide a cookie")
     parser.add_argument('-f', '--format', help = "JSON")
     parser.add_argument("-v", "--verbose", action = "store_true", help="Enable verbose output")
 
@@ -156,8 +158,6 @@ if __name__ == "__main__":
     # Handle authorization fuzzing
     if args.password_list_path is not None and args.format is None:
         if args.user is not None:
-            if args.cookies is not None:
-                run_auth_fuzz(args.url, args.password_list_path, user=args.user, cookies = args.cookies)
+            run_auth_fuzz(args.url, args.password_list_path, user=args.user, cookies = args.cookies)
         elif args.user_list_path is not None:
-            if args.cookies is not None:
-                run_auth_fuzz(args.url, args.password_list_path,  user_list=args.user_list_path, cookies = args.cookies)
+            run_auth_fuzz(args.url, args.password_list_path,  user_list=args.user_list_path, cookies = args.cookies)
