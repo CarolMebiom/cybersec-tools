@@ -12,7 +12,7 @@ import base64
 import logging
 import argparse
 
-def post_creds(url, format_call, user, password):
+def post_creds(url, format_call, user, password, cookies=None):
     payload = { "username":user, 
                 "password":password
               }
@@ -134,6 +134,7 @@ if __name__ == "__main__":
     parser.add_argument('-U', '--user', help = "The user to test against")
     parser.add_argument('-ul', '--user-list-path', help = "A user list to test with passwords, this will take longer")
     parser.add_argument('-ual', '--user-agent-list-path', help = "User agent list")
+    parser.add_argument('-c', '--cookies', help = "Provide a cookie")
     parser.add_argument('-f', '--format', help = "JSON")
     parser.add_argument("-v", "--verbose", action = "store_true", help="Enable verbose output")
 
@@ -155,6 +156,8 @@ if __name__ == "__main__":
     # Handle authorization fuzzing
     if args.password_list_path is not None and args.format is None:
         if args.user is not None:
-            run_auth_fuzz(args.url, args.password_list_path, user=args.user)
+            if args.cookies is not None:
+                run_auth_fuzz(args.url, args.password_list_path, user=args.user, cookies = args.cookies)
         elif args.user_list_path is not None:
-            run_auth_fuzz(args.url, args.password_list_path, user_list=args.user_list_path)
+            if args.cookies is not None:
+                run_auth_fuzz(args.url, args.password_list_path,  user_list=args.user_list_path, cookies = args.cookies)
