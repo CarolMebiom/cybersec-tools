@@ -18,11 +18,15 @@ def post_creds(url, format_call, user, password, cookies=False):
               }
     if cookies == True:
         cookie = requests.get(url).cookies
-    if format_call == "json":
-        request = requests.post(url, json=payload, cookies = cookie)
-    else:
-        request = requests.post(url, data=payload, cookies = cookie)
-    
+        if format_call == "json":
+            request = requests.post(url, json=payload, cookies = cookie)
+        else:
+            request = requests.post(url, data=payload, cookies = cookie)
+    else: 
+        if format_call == "json":
+            request = requests.post(url, json=payload)
+        else:
+            request = requests.post(url, data=payload)
     status = str(request.status_code)
     content = request.text
     final_url = request.url
