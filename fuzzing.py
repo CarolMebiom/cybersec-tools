@@ -21,7 +21,7 @@ def post_creds(url, format_call, user, password):
     
     status = str(request.status_code)
     content = request.text
-    final_url = response.url
+    final_url = request.url
     number_of_characters = len(content)
     number_of_words = len(content.split())
     if "loginSubmit" not in final_url:
