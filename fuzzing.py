@@ -13,6 +13,7 @@ import logging
 import argparse
 
 def post_creds(url, format_call, user, password, cookies=False):
+    print("POST_CREDS")
     payload = { "username":user, 
                 "password":password
               }
