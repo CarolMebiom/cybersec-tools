@@ -13,11 +13,9 @@ import logging
 import argparse
 
 def post_creds(url, format_call, user, password, cookies=False):
-    print("POST_CREDS")
     payload = { "username":user, 
                 "password":password
               }
-    print(cookies)
     if cookies == True:
         cookie = requests.get(url).cookies
         if format_call == "json":
@@ -157,9 +155,9 @@ if __name__ == "__main__":
     # Handle post credentials fuzzing
     if args.password_list_path is not None and args.format is not None:
         if args.user is not None:
-            run_post_creds(args.url, args.format, args.password_list_path, user=args.user)
+            run_post_creds(args.url, args.format, args.password_list_path, user=args.user, cookies = args.cookies)
         elif args.user_list_path is not None:
-            run_post_creds(args.url, args.format, args.password_list_path, user_list=args.user_list_path)
+            run_post_creds(args.url, args.format, args.password_list_path, user_list=args.user_list_path, cookies = args.cookies)
     
     # Handle authorization fuzzing
     if args.password_list_path is not None and args.format is None:
