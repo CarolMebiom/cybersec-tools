@@ -21,6 +21,8 @@ def post_creds(url, format_call, user, password):
     
     status = str(request.status_code)
     content = request.text
+    number_of_characters = len(content)
+    number_of_words = len(content.split())
     logger.debug(f"HTTP response: {content}")
 
     return status
@@ -34,7 +36,10 @@ def authorization_fuzz(url, user, password):
     request = requests.post(url, headers = header)
     status = str(request.status_code)
     content = request.text
+    number_of_characters = len(content)
+    number_of_words = len(content.split())
     logger.debug(f"HTTP response: {content}")
+    print("NUMBER OF WORDS", number_of_words)
 
     return status
 
@@ -43,6 +48,8 @@ def user_agent_fuzz(url, string):
     request = requests.get(url, headers=headers)
     status = str(request.status_code)
     content = request.text
+    number_of_characters = len(content)
+    number_of_words = len(content.split())
     logger.debug(f"HTTP response: {content}")
     print(f"HTTP response: {content}")
 
