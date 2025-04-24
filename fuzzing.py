@@ -21,13 +21,11 @@ def post_creds(url, format_call, user, password):
     
     status = str(request.status_code)
     content = request.text
-    if "invalid" in content.lower() or "error" in content.lower() or "incorrect" in content.lower():
-        print("Login Failed Marker Detected")
-    if "welcome" in content.lower() or "dashboard" in content.lower():
-        print(">> POSSIBLE SUCCESS <<", user, password)
+    final_url = response.url
     number_of_characters = len(content)
     number_of_words = len(content.split())
-    print("NUMBER OF WORDS", number_of_words)
+    if "loginSubmit" not in final_url:
+        print(f">>> POSSIBLE SUCCESS <<< {user}:{password} --> Redirected to: {final_url}")
     logger.debug(f"HTTP response: {content}")
 
     return status
