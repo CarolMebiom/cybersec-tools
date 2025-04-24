@@ -70,7 +70,7 @@ def user_agent_fuzz(url, string):
 
     return status
 
-def run_post_creds(url, format_call, password_list, user=None, user_list=None, cookies):
+def run_post_creds(url, format_call, password_list, user=None, user_list=None, cookies=False):
     print("URL -- USER -- PASSWORD -- STATUS")
     if type(user) == str:
         with open(password_list,'r') as file:
