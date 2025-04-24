@@ -21,6 +21,10 @@ def post_creds(url, format_call, user, password):
     
     status = str(request.status_code)
     content = request.text
+    if "Invalid" in content or "error" in content.lower():
+        print("Login Failed Marker Detected")
+    if "Welcome" in content or "dashboard" in content.lower():
+        print(">> POSSIBLE SUCCESS <<", user, password)
     number_of_characters = len(content)
     number_of_words = len(content.split())
     print("NUMBER OF WORDS", number_of_words)
