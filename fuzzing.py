@@ -13,11 +13,12 @@ import logging
 import argparse
 
 def post_creds(url, format_call, user, password):
+    payload = { "username":user, 
+                "password":password
+              }
     if format_call == "json":
-        payload = { "username" : user, "password" : password}
         request = requests.post(url, json=payload)
     else:
-        payload = f"username={user}&password={password}"
         request = requests.post(url, data=payload)
     
     status = str(request.status_code)
