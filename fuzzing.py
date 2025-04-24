@@ -16,6 +16,7 @@ def post_creds(url, format_call, user, password, cookies=False):
     payload = { "username":user, 
                 "password":password
               }
+    print(cookies)
     if cookies == True:
         cookie = requests.get(url).cookies
         if format_call == "json":
